@@ -7,18 +7,20 @@
 //
 
 import UIKit
+import CoreData
 
 class TodoListViewController: UITableViewController {
 
 	var itemArray = [Item]()
 	let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
-	
+	let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		// Do any additional setup after loading the view, typically from a nib.
 
 		print(dataFilePath)
+		
+		
 		
 		loadItems()
 
@@ -29,7 +31,7 @@ class TodoListViewController: UITableViewController {
 		// Dispose of any resources that can be recreated.
 	}
 	
-	//MARK - Tableview Methods
+	//MARK: - Tableview Methods
 	
 	//rows in table
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -50,7 +52,7 @@ class TodoListViewController: UITableViewController {
 		return cell
 	}
 	
-	//MARK - Tableview delegate methods
+	//MARK: - Tableview delegate methods
 	
 	//when a cell is clicked
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -58,16 +60,18 @@ class TodoListViewController: UITableViewController {
 		//switch checks sign on/off
 		itemArray[indexPath.row].done = !itemArray[indexPath.row].done
 		
+		//delete from array when the cell is clicked
+		//context.delete(itemArray[indexPath.row])
+		//itemArray.remove(at: indexPath.row)
+		
 	
-		//update plist
+		//Update plist
 		self.saveItems()
 		
-		tableView.deselectRow(at: indexPath, animated: true)
-		
-
+		tableView.deselectRow(at: indexPath, animated: true)		
 	}
 	
-	//MARK - Add New Items
+	//MARK: - Add New Items
 	
 	@IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
 	
@@ -76,56 +80,69 @@ class TodoListViewController: UITableViewController {
 		
 		//on add item button clicked
 		let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
-			//what happens when the user clicks the add itemm button on the alert
-			
-			let newItem = Item()
+
+			//Create new item
+			let newItem = Item(context: self.context)
 			newItem.title = textField.text!
+			newItem.done = false
 			
 			//add to list of to do items
 			self.itemArray.append(newItem)
 			
+			//save
 			self.saveItems()
 			
 		}
 		
+		//Create alert
 		alert.addTextField { (alertTextField) in
 			alertTextField.placeholder = "Create new item"
 			textField = alertTextField
 		
 		}
+		
+		//add alert
 		alert.addAction(action)
 		present(alert, animated: true,completion: nil)
 	}
 	
 	
-	//MARK - Model Manipulation Methods
+	//MARK: - Model Manipulation Methods
 	
+	//Create
 	//updates the plist
 	//called whenever there is a change in the table view cells
 	func saveItems(){
-		let encoder = PropertyListEncoder()
 		do{
-			let data = try encoder.encode(self.itemArray)
-			try data.write(to: self.dataFilePath!)
+			try context.save()
 		} catch {
-			print("ERRROR**")
+			print("Error saving context \(error)")
 		}
 		tableView.reloadData()
 	}
 	
+	//Read
+	//called when application starts
 	func loadItems(){
-		
-		if let data = try? Data(contentsOf: dataFilePath!){
-			let decoder = PropertyListDecoder()
-			do {
-				itemArray = try decoder.decode([Item].self, from: data)
-			} catch {
-				print("ERROR DECODING ITEM ARRAY, \(error)")
-			}
+		let request : NSFetchRequest<Item> = Item.fetchRequest()//must specify data type
+		do {
+			itemArray = try context.fetch(request)
+		} catch {
+			print("ERROR \(error)")
 		}
 	}
-	
-
-
 }
 
+//MARK: - Search Bar Methods
+extension TodoListViewController: UISearchBarDelegate{
+	
+	func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+		
+		let request: NSFetchRequest<Item> = Item.fetchRequest()
+		
+		//query item that contains the text in search bar
+		let predicate = NSPredicate(format: "title CONTAINS %@", searchBar.text!)
+	}
+	
+	
+}
