@@ -10,11 +10,18 @@ import UIKit
 
 class TodoListViewController: UITableViewController {
 
-	var itemArray = ["Find Mike", "Buy Eggos", "Destroy Demogorgon"]
+	var itemArray = [Item]()
+	let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
+	
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		// Do any additional setup after loading the view, typically from a nib.
+
+		print(dataFilePath)
+		
+		loadItems()
+
 	}
 
 	override func didReceiveMemoryWarning() {
@@ -32,7 +39,13 @@ class TodoListViewController: UITableViewController {
 	//text to put in cell
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
-		cell.textLabel?.text = itemArray[indexPath.row]
+		
+		let item = itemArray[indexPath.row]
+		
+		cell.textLabel?.text = item.title
+		
+		//is cell accessory done, if so set to checkmark if not set to none
+		cell.accessoryType = item.done ? .checkmark :.none
 		
 		return cell
 	}
@@ -42,34 +55,36 @@ class TodoListViewController: UITableViewController {
 	//when a cell is clicked
 	override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		
-		//flash grey when cell is clicked
+		//switch checks sign on/off
+		itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+		
+	
+		//update plist
+		self.saveItems()
+		
 		tableView.deselectRow(at: indexPath, animated: true)
+		
 
-		//add a check mark to cell if it is selected, remove if there is already a checkmark
-		if tableView.cellForRow(at: indexPath)?.accessoryType == .checkmark{
-			tableView.cellForRow(at: indexPath)?.accessoryType = .none
-		} else {
-			tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-		}
 	}
 	
 	//MARK - Add New Items
 	
 	@IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-		
+	
 		var textField = UITextField()
 		let alert = UIAlertController(title: "Add new Todoey Item", message: "", preferredStyle: .alert)
 		
 		//on add item button clicked
 		let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
 			//what happens when the user clicks the add itemm button on the alert
-			print(textField.text)
+			
+			let newItem = Item()
+			newItem.title = textField.text!
 			
 			//add to list of to do items
-			self.itemArray.append(textField.text!)
+			self.itemArray.append(newItem)
 			
-			//add new item to table
-			self.tableView.reloadData()
+			self.saveItems()
 			
 		}
 		
@@ -82,6 +97,33 @@ class TodoListViewController: UITableViewController {
 		present(alert, animated: true,completion: nil)
 	}
 	
+	
+	//MARK - Model Manipulation Methods
+	
+	//updates the plist
+	//called whenever there is a change in the table view cells
+	func saveItems(){
+		let encoder = PropertyListEncoder()
+		do{
+			let data = try encoder.encode(self.itemArray)
+			try data.write(to: self.dataFilePath!)
+		} catch {
+			print("ERRROR**")
+		}
+		tableView.reloadData()
+	}
+	
+	func loadItems(){
+		
+		if let data = try? Data(contentsOf: dataFilePath!){
+			let decoder = PropertyListDecoder()
+			do {
+				itemArray = try decoder.decode([Item].self, from: data)
+			} catch {
+				print("ERROR DECODING ITEM ARRAY, \(error)")
+			}
+		}
+	}
 	
 
 
