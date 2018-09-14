@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B3B179B9214B5975004EEC4C /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B179B8214B5975004EEC4C /* CategoryViewController.swift */; };
 		B3F9C0872149A83800B2D894 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F9C0862149A83800B2D894 /* AppDelegate.swift */; };
 		B3F9C0892149A83800B2D894 /* TodoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F9C0882149A83800B2D894 /* TodoListViewController.swift */; };
 		B3F9C08C2149A83800B2D894 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3F9C08A2149A83800B2D894 /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B3B179B8214B5975004EEC4C /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		B3F9C0832149A83800B2D894 /* Todoey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todoey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3F9C0862149A83800B2D894 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B3F9C0882149A83800B2D894 /* TodoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListViewController.swift; sourceTree = "<group>"; };
@@ -78,6 +80,7 @@
 			children = (
 				B3F9C0862149A83800B2D894 /* AppDelegate.swift */,
 				B3F9C0882149A83800B2D894 /* TodoListViewController.swift */,
+				B3B179B8214B5975004EEC4C /* CategoryViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -166,6 +169,7 @@
 				B3F9C0892149A83800B2D894 /* TodoListViewController.swift in Sources */,
 				B3F9C09F214A281400B2D894 /* DataModel.xcdatamodeld in Sources */,
 				B3F9C0872149A83800B2D894 /* AppDelegate.swift in Sources */,
+				B3B179B9214B5975004EEC4C /* CategoryViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
