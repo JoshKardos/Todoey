@@ -9,12 +9,13 @@
 import UIKit
 import SwipeCellKit
 
+
 class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		tableView.separatorColor = .black
+		tableView.separatorStyle = .none
 		
 		tableView.rowHeight = 80.0
 	}
@@ -36,16 +37,6 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
 		let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
 			self.updateModel(at: indexPath)
 			print("DELETE CELL")
-//			if let categoryToDelete = self.categories?[indexPath.row]{
-//				do {
-//					try self.realm.write {
-//						self.realm.delete(categoryToDelete)
-//					}
-//				} catch {
-//					print("ERROR DELETING DATEGORY")
-//				}
-//
-//			}
 		}
 		// customize the action appearance
 		deleteAction.image = UIImage(named: "TrashIcon")
