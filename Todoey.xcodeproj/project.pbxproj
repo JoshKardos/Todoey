@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B3B179B9214B5975004EEC4C /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B179B8214B5975004EEC4C /* CategoryViewController.swift */; };
 		B3B179BD214D6A19004EEC4C /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B179BC214D6A19004EEC4C /* Item.swift */; };
 		B3B179BF214D6A22004EEC4C /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B179BE214D6A22004EEC4C /* Category.swift */; };
+		B3B179C7214E25C1004EEC4C /* TodoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B179C4214E25BF004EEC4C /* TodoListViewController.swift */; };
+		B3B179C8214E25C1004EEC4C /* SwipeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B179C5214E25C0004EEC4C /* SwipeTableViewController.swift */; };
+		B3B179C9214E25C1004EEC4C /* CategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3B179C6214E25C1004EEC4C /* CategoryViewController.swift */; };
 		B3F9C0872149A83800B2D894 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F9C0862149A83800B2D894 /* AppDelegate.swift */; };
-		B3F9C0892149A83800B2D894 /* TodoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F9C0882149A83800B2D894 /* TodoListViewController.swift */; };
 		B3F9C08C2149A83800B2D894 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3F9C08A2149A83800B2D894 /* Main.storyboard */; };
 		B3F9C08E2149A83800B2D894 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3F9C08D2149A83800B2D894 /* Assets.xcassets */; };
 		B3F9C0912149A83800B2D894 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B3F9C08F2149A83800B2D894 /* LaunchScreen.storyboard */; };
@@ -21,12 +22,13 @@
 /* Begin PBXFileReference section */
 		02FA244C22A569CE5EE1E5A2 /* Pods_Todoey.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Todoey.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9622275EAC6C1BF76A312D8F /* Pods-Todoey.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Todoey.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Todoey/Pods-Todoey.debug.xcconfig"; sourceTree = "<group>"; };
-		B3B179B8214B5975004EEC4C /* CategoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		B3B179BC214D6A19004EEC4C /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		B3B179BE214D6A22004EEC4C /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		B3B179C4214E25BF004EEC4C /* TodoListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoListViewController.swift; sourceTree = "<group>"; };
+		B3B179C5214E25C0004EEC4C /* SwipeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeTableViewController.swift; sourceTree = "<group>"; };
+		B3B179C6214E25C1004EEC4C /* CategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryViewController.swift; sourceTree = "<group>"; };
 		B3F9C0832149A83800B2D894 /* Todoey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Todoey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3F9C0862149A83800B2D894 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B3F9C0882149A83800B2D894 /* TodoListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListViewController.swift; sourceTree = "<group>"; };
 		B3F9C08B2149A83800B2D894 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B3F9C08D2149A83800B2D894 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B3F9C0902149A83800B2D894 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 		B3F9C0852149A83800B2D894 /* Todoey */ = {
 			isa = PBXGroup;
 			children = (
+				B3F9C0862149A83800B2D894 /* AppDelegate.swift */,
 				B3F9C09C2149E15300B2D894 /* Views */,
 				B3F9C09B2149E12900B2D894 /* Controllers */,
 				B3F9C09A2149E10D00B2D894 /* Data Model */,
@@ -105,9 +108,9 @@
 		B3F9C09B2149E12900B2D894 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				B3F9C0862149A83800B2D894 /* AppDelegate.swift */,
-				B3B179B8214B5975004EEC4C /* CategoryViewController.swift */,
-				B3F9C0882149A83800B2D894 /* TodoListViewController.swift */,
+				B3B179C6214E25C1004EEC4C /* CategoryViewController.swift */,
+				B3B179C5214E25C0004EEC4C /* SwipeTableViewController.swift */,
+				B3B179C4214E25BF004EEC4C /* TodoListViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -238,11 +241,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3B179C7214E25C1004EEC4C /* TodoListViewController.swift in Sources */,
 				B3B179BD214D6A19004EEC4C /* Item.swift in Sources */,
-				B3F9C0892149A83800B2D894 /* TodoListViewController.swift in Sources */,
 				B3F9C0872149A83800B2D894 /* AppDelegate.swift in Sources */,
-				B3B179B9214B5975004EEC4C /* CategoryViewController.swift in Sources */,
 				B3B179BF214D6A22004EEC4C /* Category.swift in Sources */,
+				B3B179C9214E25C1004EEC4C /* CategoryViewController.swift in Sources */,
+				B3B179C8214E25C1004EEC4C /* SwipeTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
