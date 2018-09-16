@@ -8,8 +8,9 @@
 
 import UIKit
 import RealmSwift
+import SwipeCellKit
 
-class CategoryViewController: UITableViewController {
+class CategoryViewController: UITableViewController{
 	
 	let realm = try! Realm()
 	
@@ -17,6 +18,10 @@ class CategoryViewController: UITableViewController {
 	
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		tableView.separatorColor = .black
+		
+		tableView.rowHeight = 80.0
 		
 		loadCategories()
     }
@@ -40,7 +45,7 @@ class CategoryViewController: UITableViewController {
 			newCategory.name = textField.text!
 			
 			//save
-			self.saveCategories(category: newCategory)
+			self.save(category: newCategory)
 			
 		}
 		
@@ -60,7 +65,14 @@ class CategoryViewController: UITableViewController {
 	//Create
 	//updates the plist
 	//called whenever there is a change in the table view cells
-	func saveCategories(category: Category){
+	func loadCategories(){
+		
+		categories = realm.objects(Category.self)
+	
+		tableView.reloadData()
+		
+	}
+	func save(category: Category){
 		do{
 			try realm.write{
 				realm.add(category)
@@ -69,16 +81,9 @@ class CategoryViewController: UITableViewController {
 			print("Error saving context \(error)")
 		}
 		tableView.reloadData()
-	}
-	
-	func loadCategories(){
 		
-		categories = realm.objects(Category.self)
-		
-		tableView.reloadData()
 		
 	}
-	
 	
     // MARK: - Table view data source
 
@@ -90,14 +95,15 @@ class CategoryViewController: UITableViewController {
 		return categories?.count ?? 1
 		//if categories is nil, return 1
     }
-	//text to put in cell
+	
+	//text to put in category cell
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
+		
+		let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! SwipeTableViewCell
 		
 		cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added Yet"
 		
-		//is cell accessory done, if so set to checkmark if not set to none
-		//cell.accessoryType = item.done ? .checkmark :.none
+		cell.delegate = self
 		
 		return cell
 	}
@@ -114,5 +120,37 @@ class CategoryViewController: UITableViewController {
 		}
 		
 	}
+}
 
+//MARK: - Swipe Cell views delegate methods
+
+extension CategoryViewController : SwipeTableViewCellDelegate{
+	func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+		guard orientation == .right else { return nil }
+		
+		let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+			if let categoryToDelete = self.categories?[indexPath.row]{
+				do {
+					try self.realm.write {
+						self.realm.delete(categoryToDelete)
+					}
+				} catch {
+					print("ERROR DELETING DATEGORY")
+				}
+				
+			}
+		}
+		// customize the action appearance
+		deleteAction.image = UIImage(named: "TrashIcon")
+		
+		return [deleteAction]
+	}
+	
+	func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+		var options = SwipeOptions()
+		options.expansionStyle = .destructive
+		return options
+	}
+	
+	
 }
