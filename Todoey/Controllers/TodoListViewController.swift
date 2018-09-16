@@ -8,6 +8,7 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
 class TodoListViewController: SwipeTableViewController {
 	
@@ -57,18 +58,30 @@ class TodoListViewController: SwipeTableViewController {
 	
 	//text to put in cell
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		
 		let cell = super.tableView(tableView, cellForRowAt: indexPath)
+		
 		if let item = todoItems?[indexPath.row] {
+
 			cell.textLabel?.text = item.title
+			
+			if let color = UIColor(hexString: selectedCategory?.color).darken(byPercentage: CGFloat(indexPath.row) / CGFloat(todoItems!.count)){
+				cell.backgroundColor = color
+				cell.textLabel?.textColor = UIColor(contrastingBlackOrWhiteColorOn: color, isFlat: true)///ContrastColorOf(color, returnFlat: true)
+			}
 			
 			//is cell accessory done, if so set to checkmark if not set to none
 			cell.accessoryType = item.done ? .checkmark :.none
+			
 			print("******** ITEMS")
-		} else {
-			print("******** NO ITEMS")
-			cell.textLabel?.text = "No Items Added"
-		}
 		
+		} else {
+		
+			print("******** NO ITEMS")
+			
+			cell.textLabel?.text = "No Items Added"
+		
+		}
 
 		return cell
 	}
