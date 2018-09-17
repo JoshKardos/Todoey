@@ -21,6 +21,34 @@ class CategoryViewController: SwipeTableViewController{
 		
 		loadCategories()
     }
+	
+	override func viewWillAppear(_ animated: Bool) {
+		
+		let colorHex = "66CCFF"
+
+		//make sure there exists a navigation bar
+		guard let navBar = navigationController?.navigationBar else {fatalError("Navigation controller does not exist")}
+		
+		//make sure there exists a ui color for the hexstring
+		guard let navBarColor = UIColor(hexString: colorHex) else{ fatalError() }
+
+		/////////////////////////////////
+		///////  Update NavBar   ////////
+		/////////////////////////////////
+		
+		//heading is the selected category
+		title = "Todoey"
+		
+		//set color of crosshairs and back button
+		navBar.tintColor = UIColor(contrastingBlackOrWhiteColorOn: navBarColor, isFlat: true)
+		
+		
+		//navBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor(contrastingBlackOrWhiteColorOn: navBarColor, isFlat: true)]
+		
+		////////////////////////////////
+		//// End of updating navbar ////
+		////////////////////////////////
+	}
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

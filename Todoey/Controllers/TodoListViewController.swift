@@ -15,6 +15,7 @@ class TodoListViewController: SwipeTableViewController {
 	var todoItems: Results<Item>?
 	let realm = try! Realm()
 	
+	@IBOutlet weak var searchBar: UISearchBar!
 	var selectedCategory : Category?{
 		didSet{
 			loadItems()
@@ -27,8 +28,59 @@ class TodoListViewController: SwipeTableViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
+	
 	}
 
+	override func viewWillAppear(_ animated: Bool) {
+		
+		//make sure there is a selected category color
+		guard let colorHex = selectedCategory?.color else { fatalError()}
+		
+		updateNavBar(withHexCode: colorHex)
+	
+
+		
+	
+	}
+	
+	override func viewWillDisappear(_ animated: Bool) {
+		
+		updateNavBar(withHexCode: "66CCFF")
+		
+	}
+	
+	func updateNavBar(withHexCode colorHexCode: String){
+		//make sure there exists a navigation bar
+		guard let navBar = navigationController?.navigationBar else {fatalError("Navigation controller does not exist")}
+		
+		//make sure there exists a ui color for the hexstring
+		guard let navBarColor = UIColor(hexString: colorHexCode) else{ fatalError() }
+		
+		/////////////////////////////////
+		///////  Update NavBar   ////////
+		/////////////////////////////////
+		
+		//heading is the selected category
+		title = selectedCategory?.name
+		
+		//set color of the title
+		navBar.barTintColor = navBarColor
+		
+		//set color of crosshairs and back button
+		navBar.tintColor = UIColor(contrastingBlackOrWhiteColorOn: navBarColor, isFlat: true)
+		
+		
+		//navBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor(contrastingBlackOrWhiteColorOn: navBarColor, isFlat: true)]
+		
+		//searhc bar color
+		searchBar.barTintColor = navBarColor
+		
+		////////////////////////////////
+		//// End of updating navbar ////
+		////////////////////////////////
+		
+	}
+	
 	override func didReceiveMemoryWarning() {
 		super.didReceiveMemoryWarning()
 		// Dispose of any resources that can be recreated.
@@ -67,7 +119,7 @@ class TodoListViewController: SwipeTableViewController {
 			
 			if let color = UIColor(hexString: selectedCategory?.color).darken(byPercentage: CGFloat(indexPath.row) / CGFloat(todoItems!.count)){
 				cell.backgroundColor = color
-				cell.textLabel?.textColor = UIColor(contrastingBlackOrWhiteColorOn: color, isFlat: true)///ContrastColorOf(color, returnFlat: true)
+				cell.textLabel?.textColor = UIColor(contrastingBlackOrWhiteColorOn: color, isFlat: true)
 			}
 			
 			//is cell accessory done, if so set to checkmark if not set to none
