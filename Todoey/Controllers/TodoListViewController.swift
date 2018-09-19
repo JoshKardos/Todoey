@@ -63,14 +63,16 @@ class TodoListViewController: SwipeTableViewController {
 		//heading is the selected category
 		title = selectedCategory?.name
 		
-		//set color of the title
+		
+		
+		//set color of the top
 		navBar.barTintColor = navBarColor
 		
 		//set color of crosshairs and back button
 		navBar.tintColor = UIColor(contrastingBlackOrWhiteColorOn: navBarColor, isFlat: true)
 		
 		
-		//navBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor(contrastingBlackOrWhiteColorOn: navBarColor, isFlat: true)]
+		navBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor : UIColor(contrastingBlackOrWhiteColorOn: navBarColor, isFlat: true)]
 		
 		//searhc bar color
 		searchBar.barTintColor = navBarColor
